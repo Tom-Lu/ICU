@@ -14,6 +14,7 @@ namespace TomLu.ICU
     {
         private IviConfigStore iviConfigStore;
         private TreeNode systemInfoNode;
+        private TreeNode interactControlNode;
         private TreeNode logicalNameNode;
         private TreeNode hardwareAssetNode;
         private TreeNode driverSessionNode;
@@ -30,7 +31,7 @@ namespace TomLu.ICU
             InitializeComponent();
 
             navigationList = new ArrayList();
-            DisplayConfigStore();
+            DisplayConfigStore();           
         }
 
         private void ConfigStoreRefresh_Click(object sender, EventArgs e)
@@ -87,7 +88,11 @@ namespace TomLu.ICU
             {
                 activePanel = new PanelSystemInfo();
             }
-            else if (currentNode == publishedAPINode)
+            else if (currentNode.Equals(interactControlNode))
+            {
+                activePanel = new PanelTest();
+            }
+            else if (currentNode.Equals(publishedAPINode))
             {
                 activePanel = new PanelPublishedAPIs();
             }
@@ -149,6 +154,11 @@ namespace TomLu.ICU
                 }
                 ActiveNode(currentNode, false);
             }
+        }
+
+        private void ExplorerTree_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            e.CancelEdit = GetNodeType(e.Node) == NodeType.Unknow;
         }
 
         private NodeType GetNodeType(TreeNode CurrentNode)
@@ -245,6 +255,10 @@ namespace TomLu.ICU
                 systemInfoNode.ImageKey = "icon_pc.png";
                 systemInfoNode.SelectedImageKey = "icon_pc.png";
 
+                interactControlNode = new TreeNode("Interactive Control");
+                interactControlNode.ImageKey = "icon_hardware.png";
+                interactControlNode.SelectedImageKey = "icon_hardware.png";
+
                 logicalNameNode = new TreeNode("Logical Names");
                 logicalNameNode.ImageKey = "icon_alias.png";
                 logicalNameNode.SelectedImageKey = "icon_alias.png";
@@ -268,6 +282,7 @@ namespace TomLu.ICU
 
                 ExplorerTree.Nodes.Add(systemInfoNode);
 
+                systemInfoNode.Nodes.Add(interactControlNode);
                 systemInfoNode.Nodes.Add(logicalNameNode);
                 systemInfoNode.Nodes.Add(driverSessionNode);
                 systemInfoNode.Nodes.Add(hardwareAssetNode);

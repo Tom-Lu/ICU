@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Ivi.ConfigServer.Interop;
 using System.Collections;
 using System.Reflection;
+using Ivi.ConfigServer.Interop;
+using Ivi.SessionFactory.Interop;
 
 namespace TomLu.ICU
 {
     class IVIHandler
     {
         private static IVIHandler instance = null;
+        private static IviSessionFactory sessionFactory = null;
         private IviConfigStore iviConfigStore = null;
         public static string[] RCNameList = new string[] { "Channel", "Marker", "OutputChannel", "LFGenerator", "AnalogModulationSource", 
                                                      "RFInput", "IFOutput", "IFInput", "RFOutput", "ArmSource", "TriggerSource", "OutputPhase" };
@@ -32,9 +34,15 @@ namespace TomLu.ICU
             get { return iviConfigStore; }
         }
 
+        public IviSessionFactory SessionFactory
+        {
+            get { return sessionFactory; }
+        }
+
         private IVIHandler()
         {
             iviConfigStore = new IviConfigStore();
+            sessionFactory = new IviSessionFactory();
         }
 
         public static void Reset()

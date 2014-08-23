@@ -39,15 +39,15 @@ namespace TomLu.ICU
                 Utility.BindDataSource(desc, "Text", logicalName, "Description");
 
                 driver.Items.AddRange(IVIHandler.Instance.GetDriverNames().ToArray());
-
                 if (logicalName.Session != null)
                 {
                     driver.Text = logicalName.Session.Name;
-                    driver.SelectedValueChanged += delegate(object sender, EventArgs e)
-                    {
-                        logicalName.Session = (IviSession)IVIHandler.Instance.GetDriverSession(driver.Text);
-                    };
                 }
+
+                driver.SelectedValueChanged += delegate(object sender, EventArgs e)
+                {
+                    logicalName.Session = (IviSession)IVIHandler.Instance.GetDriverSession(driver.Text);
+                };
             }
         }
     }
