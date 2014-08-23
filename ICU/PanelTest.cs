@@ -7,12 +7,15 @@ using System.Text;
 using System.Windows.Forms;
 using Ivi.SessionFactory.Interop;
 using Ivi.Driver.Interop;
+using TomLu.ICU.TestPages;
+using System.Collections;
 
 namespace TomLu.ICU
 {
     public partial class PanelTest : UserControl
     {
-        private IIviDriver driver = null;
+        private IIviDriver Driver = null;
+        private TabPage IviDriverPage = null;
         public PanelTest()
         {
             InitializeComponent();
@@ -26,97 +29,116 @@ namespace TomLu.ICU
 
             LogicalName.Items.Clear();
             LogicalName.Items.AddRange(IVIHandler.Instance.GetLogicalNames().ToArray());
+            IviDriverPage = this.driverTab;
 
             SetupCallbacks();
+
         }
 
         private void SetupCallbacks()
         {
             UtilityResetBtn.Click += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.Utility.Reset();
+                    Driver.Utility.Reset();
                 }
             };
 
             UtilityResetDefaultBtn.Click += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.Utility.ResetWithDefaults();
+                    Driver.Utility.ResetWithDefaults();
                 }
             };
 
             SelfTestBtn.Click += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
                     int TestResult = 0;
                     string TestMessage = string.Empty;
-                    driver.Utility.SelfTest(ref TestResult, ref TestMessage);
+                    Driver.Utility.SelfTest(ref TestResult, ref TestMessage);
                     SelfTestResult.Text = string.Format("({0}){1}", TestResult, TestMessage);
                 }
             };
 
             ErrorQueryBtn.Click += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
                     int ErrorCode = 0;
                     string ErrorMessage = string.Empty;
-                    driver.Utility.ErrorQuery(ref ErrorCode, ref ErrorMessage);
+                    Driver.Utility.ErrorQuery(ref ErrorCode, ref ErrorMessage);
                     ErrorStatus.Text = string.Format("({0}){1}", ErrorCode, ErrorMessage);
                 }
             };
 
             Cache.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.Cache = Cache.Checked;
+                    Driver.DriverOperation.Cache = Cache.Checked;
                 }
             };
 
             InterchangeCheck.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.InterchangeCheck = InterchangeCheck.Checked;
+                    Driver.DriverOperation.InterchangeCheck = InterchangeCheck.Checked;
                 }
             };
 
             RangeCheck.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.RangeCheck = RangeCheck.Checked;
+                    Driver.DriverOperation.RangeCheck = RangeCheck.Checked;
                 }
             };
 
             QueryStatus.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.QueryInstrumentStatus = QueryStatus.Checked;
+                    Driver.DriverOperation.QueryInstrumentStatus = QueryStatus.Checked;
                 }
             };
 
             RecordCoercions.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.RecordCoercions = RecordCoercions.Checked;
+                    Driver.DriverOperation.RecordCoercions = RecordCoercions.Checked;
                 }
             };
 
             Simulate.CheckedChanged += delegate(object sender, EventArgs e)
             {
-                if (driver != null && driver.Initialized)
+                if (Driver != null && Driver.Initialized)
                 {
-                    driver.DriverOperation.Simulate = Simulate.Checked;
+                    Driver.DriverOperation.Simulate = Simulate.Checked;
                 }
             };
+        }
+
+        private void DisplayIviTestPages()
+        {
+            IviFunctionTab.Controls.Clear();
+            IviFunctionTab.Controls.Add(IviDriverPage);
+
+            if (Driver.Initialized)
+            {
+                ArrayList Capabilities = new ArrayList(Driver.Identity.GroupCapabilities.Split(','));
+                if (Capabilities.Contains("IviDmmBase"))
+                {
+                    TabPage dmmTab = new TabPage("DMM");
+                    dmmTab.Controls.Add(new PageIviDmmBase(Driver));
+                    IviFunctionTab.Controls.Add(dmmTab);
+                }
+            }
         }
 
         private void LogicalName_SelectedIndexChanged(object sender, EventArgs e)
@@ -124,9 +146,9 @@ namespace TomLu.ICU
             StringBuilder driverInfo = new StringBuilder();
             if (!LogicalName.Text.Equals(string.Empty))
             {
-                driver = (IIviDriver)IVIHandler.Instance.SessionFactory.CreateDriver(LogicalName.Text);
+                Driver = (IIviDriver)IVIHandler.Instance.SessionFactory.CreateDriver(LogicalName.Text);
 
-                if (driver != null)
+                if (Driver != null)
                 {
                     DisplayDriverInfo();
                     IdQuery.Enabled = true;
@@ -144,51 +166,52 @@ namespace TomLu.ICU
 
         private void DisplayDriverInfo()
         {
-            if (driver != null)
+            if (Driver != null)
             {
                 DriverPropertyView.Items.Clear();
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Identifier", driver.Identity.Identifier }));
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Revision", driver.Identity.Revision }));
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Description", driver.Identity.Description }));
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SupportedInstrumentModels", driver.Identity.SupportedInstrumentModels }));
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SpecificationMajorVersion", driver.Identity.SpecificationMajorVersion.ToString() }));
-                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SpecificationMinorVersion", driver.Identity.SpecificationMinorVersion.ToString() }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Identifier", Driver.Identity.Identifier }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Revision", Driver.Identity.Revision }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "Description", Driver.Identity.Description }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SupportedInstrumentModels", Driver.Identity.SupportedInstrumentModels }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SpecificationMajorVersion", Driver.Identity.SpecificationMajorVersion.ToString() }));
+                DriverPropertyView.Items.Add(new ListViewItem(new string[] { "SpecificationMinorVersion", Driver.Identity.SpecificationMinorVersion.ToString() }));
 
-                if (driver.Initialized)
+                if (Driver.Initialized)
                 {
-                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentModel", driver.Identity.InstrumentModel }));
-                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentFirmwareRevision", driver.Identity.InstrumentFirmwareRevision }));
-                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentManufacturer", driver.Identity.InstrumentManufacturer }));
-                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "GroupCapabilities", driver.Identity.GroupCapabilities }));
+                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentModel", Driver.Identity.InstrumentModel }));
+                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentFirmwareRevision", Driver.Identity.InstrumentFirmwareRevision }));
+                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "InstrumentManufacturer", Driver.Identity.InstrumentManufacturer }));
+                    DriverPropertyView.Items.Add(new ListViewItem(new string[] { "GroupCapabilities", Driver.Identity.GroupCapabilities }));
                 }
             }
 
             DisplayDriverOptions();
+            DisplayIviTestPages();
         }
 
         public void DisplayDriverOptions()
         {
-            if (driver != null && driver.Initialized)
+            if (Driver != null && Driver.Initialized)
             {
-                IoResDesc.Text = driver.DriverOperation.IoResourceDescriptor;
-                DriverSetup.Text = driver.DriverOperation.DriverSetup;
-                Cache.Checked = driver.DriverOperation.Cache;
-                InterchangeCheck.Checked = driver.DriverOperation.InterchangeCheck;
-                RangeCheck.Checked = driver.DriverOperation.RangeCheck;
-                QueryStatus.Checked = driver.DriverOperation.QueryInstrumentStatus;
-                RecordCoercions.Checked = driver.DriverOperation.RecordCoercions;
-                Simulate.Checked = driver.DriverOperation.Simulate;
+                IoResDesc.Text = Driver.DriverOperation.IoResourceDescriptor;
+                DriverSetup.Text = Driver.DriverOperation.DriverSetup;
+                Cache.Checked = Driver.DriverOperation.Cache;
+                InterchangeCheck.Checked = Driver.DriverOperation.InterchangeCheck;
+                RangeCheck.Checked = Driver.DriverOperation.RangeCheck;
+                QueryStatus.Checked = Driver.DriverOperation.QueryInstrumentStatus;
+                RecordCoercions.Checked = Driver.DriverOperation.RecordCoercions;
+                Simulate.Checked = Driver.DriverOperation.Simulate;
             }
         }
 
         private void Init_CLose_Btn_Click(object sender, EventArgs e)
         {
-            if (driver != null)
+            if (Driver != null)
             {
-                if (!driver.Initialized)
+                if (!Driver.Initialized)
                 {
-                    driver.Initialize(LogicalName.Text, IdQuery.Checked, Reset.Checked);
-                    if (driver.Initialized)
+                    Driver.Initialize(LogicalName.Text, IdQuery.Checked, Reset.Checked);
+                    if (Driver.Initialized)
                     {
                         DisplayDriverInfo();
                         Init_Close_Btn.Text = "Close";
@@ -205,7 +228,8 @@ namespace TomLu.ICU
                 }
                 else
                 {
-                    driver.Close();
+                    Driver.Close();
+                    DisplayDriverInfo();
                     Init_Close_Btn.Text = "Initialize";
                     LogicalName.Enabled = true;
                     DriverUtility.Enabled = false;

@@ -99,6 +99,12 @@
     <Compile Include="PanelSoftwareModule.Designer.cs">
       <DependentUpon>PanelSoftwareModule.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestPages\PageIviDmmBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestPages\PageIviDmmBase.Designer.cs">
+      <DependentUpon>PageIviDmmBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="ConfigureExplorer.resx">
       <DependentUpon>ConfigureExplorer.cs</DependentUpon>
@@ -138,6 +144,9 @@
     </Compile>
     <EmbeddedResource Include="PanelSoftwareModule.resx">
       <DependentUpon>PanelSoftwareModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestPages\PageIviDmmBase.resx">
+      <DependentUpon>PageIviDmmBase.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
