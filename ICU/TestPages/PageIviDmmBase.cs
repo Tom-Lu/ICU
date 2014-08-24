@@ -23,6 +23,23 @@ namespace TomLu.ICU.TestPages
             Dmm = (IIviDmm)Driver;
             IviDmmFunction.Items.Clear();
             IviDmmFunction.Items.AddRange(Enum.GetNames(typeof(IviDmmFunctionEnum)));
+            IviDmmFunction.Text = (string)IviDmmFunction.Items[0];
+        }
+
+        private void ConfigureBtn_Click(object sender, EventArgs e)
+        {
+            if (Dmm != null)
+            {
+                Dmm.Configure((IviDmmFunctionEnum)Enum.Parse(typeof(IviDmmFunctionEnum), IviDmmFunction.Text), double.Parse(Range.Text), double.Parse(Resolution.Text));
+            }
+        }
+
+        private void ReadBtn_Click(object sender, EventArgs e)
+        {
+            if (Dmm != null)
+            {
+                ReadValue.Text = Dmm.Measurement.Read(int.Parse(Timeout.Text)).ToString();
+            }
         }
     }
 }

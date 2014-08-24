@@ -134,9 +134,16 @@ namespace TomLu.ICU
                 ArrayList Capabilities = new ArrayList(Driver.Identity.GroupCapabilities.Split(','));
                 if (Capabilities.Contains("IviDmmBase"))
                 {
-                    TabPage dmmTab = new TabPage("DMM");
+                    TabPage dmmTab = new TabPage("IviDmm");
                     dmmTab.Controls.Add(new PageIviDmmBase(Driver));
                     IviFunctionTab.Controls.Add(dmmTab);
+                }
+
+                if (Capabilities.Contains("IviDCPwrBase"))
+                {
+                    TabPage dcPwrTab = new TabPage("IviDCPwr");
+                    dcPwrTab.Controls.Add(new PageIviDCPwrBase(Driver));
+                    IviFunctionTab.Controls.Add(dcPwrTab);
                 }
             }
         }
