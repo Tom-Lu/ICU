@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.IviDmmFunction = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Range = new System.Windows.Forms.TextBox();
@@ -37,29 +36,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.ConfigureBtn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ReadBtn = new System.Windows.Forms.Button();
-            this.Timeout = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.ReadValue = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.ReadValue = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Timeout = new System.Windows.Forms.TextBox();
+            this.ReadBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(114, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 33);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "IviDmmBase";
             // 
             // IviDmmFunction
             // 
             this.IviDmmFunction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IviDmmFunction.FormattingEnabled = true;
-            this.IviDmmFunction.Location = new System.Drawing.Point(17, 70);
+            this.IviDmmFunction.Location = new System.Drawing.Point(17, 75);
             this.IviDmmFunction.Name = "IviDmmFunction";
             this.IviDmmFunction.Size = new System.Drawing.Size(189, 20);
             this.IviDmmFunction.TabIndex = 1;
@@ -75,7 +65,7 @@
             // 
             // Range
             // 
-            this.Range.Location = new System.Drawing.Point(214, 70);
+            this.Range.Location = new System.Drawing.Point(214, 74);
             this.Range.Name = "Range";
             this.Range.Size = new System.Drawing.Size(64, 21);
             this.Range.TabIndex = 3;
@@ -83,7 +73,7 @@
             // 
             // Resolution
             // 
-            this.Resolution.Location = new System.Drawing.Point(286, 70);
+            this.Resolution.Location = new System.Drawing.Point(286, 74);
             this.Resolution.Name = "Resolution";
             this.Resolution.Size = new System.Drawing.Size(63, 21);
             this.Resolution.TabIndex = 4;
@@ -109,7 +99,7 @@
             // 
             // ConfigureBtn
             // 
-            this.ConfigureBtn.Location = new System.Drawing.Point(368, 68);
+            this.ConfigureBtn.Location = new System.Drawing.Point(368, 72);
             this.ConfigureBtn.Name = "ConfigureBtn";
             this.ConfigureBtn.Size = new System.Drawing.Size(75, 23);
             this.ConfigureBtn.TabIndex = 7;
@@ -131,23 +121,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Measurement";
             // 
-            // ReadBtn
+            // label6
             // 
-            this.ReadBtn.Location = new System.Drawing.Point(14, 33);
-            this.ReadBtn.Name = "ReadBtn";
-            this.ReadBtn.Size = new System.Drawing.Size(75, 23);
-            this.ReadBtn.TabIndex = 0;
-            this.ReadBtn.Text = "Read";
-            this.ReadBtn.UseVisualStyleBackColor = true;
-            this.ReadBtn.Click += new System.EventHandler(this.ReadBtn_Click);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(316, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Read Value";
             // 
-            // Timeout
+            // ReadValue
             // 
-            this.Timeout.Location = new System.Drawing.Point(103, 34);
-            this.Timeout.Name = "Timeout";
-            this.Timeout.Size = new System.Drawing.Size(126, 21);
-            this.Timeout.TabIndex = 1;
-            this.Timeout.Text = "1000";
+            this.ReadValue.Location = new System.Drawing.Point(318, 33);
+            this.ReadValue.Name = "ReadValue";
+            this.ReadValue.Size = new System.Drawing.Size(122, 21);
+            this.ReadValue.TabIndex = 3;
+            this.ReadValue.Text = "0.0";
             // 
             // label5
             // 
@@ -158,27 +147,41 @@
             this.label5.TabIndex = 2;
             this.label5.Text = "Timeout(Milliseconds)";
             // 
-            // ReadValue
+            // Timeout
             // 
-            this.ReadValue.Location = new System.Drawing.Point(318, 33);
-            this.ReadValue.Name = "ReadValue";
-            this.ReadValue.Size = new System.Drawing.Size(122, 21);
-            this.ReadValue.TabIndex = 3;
-            this.ReadValue.Text = "0.0";
+            this.Timeout.Location = new System.Drawing.Point(103, 34);
+            this.Timeout.Name = "Timeout";
+            this.Timeout.Size = new System.Drawing.Size(126, 21);
+            this.Timeout.TabIndex = 1;
+            this.Timeout.Text = "1000";
             // 
-            // label6
+            // ReadBtn
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(316, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 12);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Read Value";
+            this.ReadBtn.Location = new System.Drawing.Point(14, 33);
+            this.ReadBtn.Name = "ReadBtn";
+            this.ReadBtn.Size = new System.Drawing.Size(75, 23);
+            this.ReadBtn.TabIndex = 0;
+            this.ReadBtn.Text = "Read";
+            this.ReadBtn.UseVisualStyleBackColor = true;
+            this.ReadBtn.Click += new System.EventHandler(this.ReadBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.MediumBlue;
+            this.label1.Location = new System.Drawing.Point(3, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(468, 31);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "IviDmmBase";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PageIviDmmBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ConfigureBtn);
             this.Controls.Add(this.label4);
@@ -187,7 +190,6 @@
             this.Controls.Add(this.Range);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.IviDmmFunction);
-            this.Controls.Add(this.label1);
             this.Name = "PageIviDmmBase";
             this.Size = new System.Drawing.Size(474, 443);
             this.groupBox1.ResumeLayout(false);
@@ -199,7 +201,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox IviDmmFunction;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox Range;
@@ -213,5 +214,6 @@
         private System.Windows.Forms.Button ReadBtn;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox ReadValue;
+        private System.Windows.Forms.Label label1;
     }
 }

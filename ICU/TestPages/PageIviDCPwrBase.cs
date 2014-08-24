@@ -22,18 +22,16 @@ namespace TomLu.ICU.TestPages
             InitializeComponent();
             DCPwr = (IIviDCPwr)Driver;
 
-            Output.Items.Clear();
+            OutputTabs.TabPages.Clear();
+
             IIviDCPwrOutputs Outputs = DCPwr.Outputs;
             for (int i = 1; i <= Outputs.Count; i++)
             {
-                Output.Items.Add(Outputs.get_Name(i));
+                string Name = Outputs.get_Name(i);
+                TabPage outputPage = new TabPage(Name);
+                outputPage.Controls.Add(new PageIviDCPwrOutputTab(DCPwr, Outputs.get_Item(Name)));
+                OutputTabs.TabPages.Add(outputPage);
             }
-
-            if (Output.Items.Count > 0)
-            {
-                Output.Text = (string)Output.Items[0];
-            }
-
         }
     }
 }

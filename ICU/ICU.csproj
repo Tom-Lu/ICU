@@ -107,6 +107,12 @@
     <Compile Include="TestPages\PageIviDCPwrBase.Designer.cs">
       <DependentUpon>PageIviDCPwrBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestPages\PageIviDCPwrOutputTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestPages\PageIviDCPwrOutputTab.Designer.cs">
+      <DependentUpon>PageIviDCPwrOutputTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestPages\PageIviDmmBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestPages\PageIviDCPwrBase.resx">
       <DependentUpon>PageIviDCPwrBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestPages\PageIviDCPwrOutputTab.resx">
+      <DependentUpon>PageIviDCPwrOutputTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestPages\PageIviDmmBase.resx">
       <DependentUpon>PageIviDmmBase.cs</DependentUpon>
